@@ -5,13 +5,15 @@ class Bucket {
         if(!initial){
             this.tokens=capacity;
         }
-        this.initial=initial;
-        this.tokens = initial;
+        else{
+            this.tokens = initial;
+        }
         this.fillQuantiy=fillQuantiy
         setInterval(() => this.addToken(), 1000*fillAfterSeconds);
     }
 
     addToken() {
+        console.log('refilling')
         if (this.tokens < this.capacity) {
             this.tokens += this.fillQuantiy;
         }
@@ -26,15 +28,16 @@ class Bucket {
         return false;
     }
 }
-const bucket=new Bucket(10,2,5)
+
 const express = require('express');
 const app = express();
 
-function limitRequests(perSecond, maxBurst) {
-    const bucket = new TokenBucket(maxBurst, perSecond);
+function limitRequests(maxBurst,seconds,refillQuantity) {
+    const bucket=new Bucket(maxBurst,seconds,refillQuantity)
 
     // Return an Express middleware function
     return function limitRequestsMiddleware(req, res, next) {
+        console.log(bucket.tokens)
         if (bucket.take()) {
             next();
         } else {
@@ -45,7 +48,7 @@ function limitRequests(perSecond, maxBurst) {
 
 
 app.get('/',
-    limitRequests(5, 10), // Apply rate limiting middleware
+    limitRequests(5,100,1), // Apply rate limiting middleware
     (req, res) => {
         res.send('Hello from the rate limited API');
     }
