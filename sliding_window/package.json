@@ -1,0 +1,16 @@
+{
+  "name": "sliding-window",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.0",
+    "redis": "^2.8.0",
+    "redis-rate-limiter": "^1.2.0"
+  }
+}
