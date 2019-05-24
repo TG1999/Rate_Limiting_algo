@@ -4,11 +4,11 @@ var redis = require('redis');
 var client = redis.createClient(6379, 'localhost', {enable_offline_queue: false});
 var middleware = rateLimiter.middleware({
   redis: client,
-  key: 'ip',
-  rate: '10/minute'
+  key: (x)=>{return x.id},
+  rate: '5/minute'
 });
 const app=express();
-app.get('/test',middleware,(req,res)=>{
+app.get('/',middleware,(req,res)=>{
     res.send('working')
 })
 app.listen(2000)
