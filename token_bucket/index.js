@@ -37,7 +37,6 @@ function limitRequests(maxBurst,seconds,refillQuantity) {
 
     // Return an Express middleware function
     return function limitRequestsMiddleware(req, res, next) {
-        console.log(bucket.tokens)
         if (bucket.take()) {
             next();
         } else {
